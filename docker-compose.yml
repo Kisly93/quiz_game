@@ -1,0 +1,15 @@
+version: '3'
+services:
+  vk_bot:
+    image: vk_bot
+    build:
+      context: .
+      dockerfile: Dockerfile_vk
+    restart: always
+
+  tg_bot:
+    image: tg_bot
+    build:
+      context: .
+      dockerfile: Dockerfile_tg
+    restart: always

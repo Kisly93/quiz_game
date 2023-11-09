@@ -7,6 +7,7 @@ from vk_api.utils import get_random_id
 from common_functions import get_random_question, redis_db, check_answer
 from questions_answers import questions_and_answers
 
+
 vk_session = vk_api.VkApi(token=VK_TOKEN)
 vk_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)

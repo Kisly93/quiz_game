@@ -1,0 +1,4 @@
+python-dotenv==0.9.1
+redis==5.0.1
+telebot==0.0.5
+vk-api==11.9.9

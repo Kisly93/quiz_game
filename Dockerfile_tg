@@ -1,0 +1,9 @@
+FROM python:3.10
+WORKDIR /app
+COPY requirements.txt /app/
+COPY common_functions.py /app/
+COPY config.py /app/
+COPY questions_answers.py /app/
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . /app/
+CMD ["python", "bot_tg.py"]
