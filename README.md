@@ -35,14 +35,14 @@ VK_TOKEN= API ключ, который вы получаете при созда
 Создайте в проекте папку questions и туда положите файлы с вопросами и ответами.
 Также можно самостоятельно прописать путь к файлу с вопросами и ответами. Запустить командой
 ```
-   python your_script.py --questions_file path/to/questions/file1.txt
+python your_script.py --questions_file path/to/questions/file1.txt
 
 ```
 
 Запустите бота Telegram:
 
 ```
-   python bot_tg.py
+python bot_tg.py
 ```
 Запустите бота Vkontakte:
 
