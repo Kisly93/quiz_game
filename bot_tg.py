@@ -1,13 +1,15 @@
 import os
+import redis
 from dotenv import load_dotenv
 import telebot
-from redis_manager import RedisManager
 import logging
 from telebot import types
 from questions_answers import load_questions_answers, get_random_question, check_answer
 
 load_dotenv()
 bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT_API'))
+redis_db = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'),
+                             password=os.getenv('REDIS_PASSWORD'), db=0)
 
 
 @bot.message_handler(commands=['start'])
@@ -31,13 +33,12 @@ def command_default(message):
 def handle_telegram_messages(message):
     chat_id = message.chat.id
     user_answer = message.text
-    redis_manager = RedisManager()
     if user_answer == 'Новый вопрос':
         random_question = get_random_question()
-        redis_manager.get_redis_db().set(chat_id, random_question)
+        redis_db.set(chat_id, random_question)
         bot.send_message(chat_id, f"Вопрос: {random_question}")
     else:
-        correct_answer = load_questions_answers().get(redis_manager.get_redis_db().get(chat_id).decode('utf-8'))
+        correct_answer = load_questions_answers().get(redis_db.get(chat_id).decode('utf-8'))
         if user_answer.lower() == 'сдаться':
             bot.send_message(chat_id, f"Вот тебе правильный ответ: {correct_answer} Попробуйте следующий вопрос.")
         elif check_answer(user_answer, correct_answer):
