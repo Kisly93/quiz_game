@@ -3,18 +3,15 @@ import os
 import random
 import argparse
 
-questions_and_answers = None
+
 
 
 def is_file(filename):
     if os.path.isfile(filename):
         return filename
-    else:
-        raise argparse.ArgumentTypeError(f'{filename} не является допустимым именем файла')
 
 
-def load_questions_answers(questions_file=None):
-    global questions_and_answers
+def load_questions_answers(questions_and_answers=None, questions_file=None):
 
     if questions_and_answers is not None:
         return questions_and_answers
@@ -74,5 +71,7 @@ if __name__ == "__main__":
     try:
         questions_and_answers = load_questions_answers(questions_file)
         logger.info(f'Вопросы и ответы загружены из файла: {questions_file}')
+    except FileNotFoundError as e:
+        logger.error(f"Файл вопросов не найден: {str(e)}")
     except Exception as e:
-        logging.error(f"Произошла ошибка: {str(e)}")
+        logger.error(f"Произошла ошибка при загрузке файлов: {str(e)}")
