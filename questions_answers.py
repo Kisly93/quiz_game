@@ -4,23 +4,17 @@ import random
 import argparse
 
 
-
-
 def is_file(filename):
     if os.path.isfile(filename):
         return filename
 
 
 def load_questions_answers(questions_and_answers=None, questions_file=None):
-
     if questions_and_answers is not None:
         return questions_and_answers
 
     if questions_file is not None:
-        if not os.path.isfile(questions_file):
-            raise FileNotFoundError(f"Файл вопросов не найден: {questions_file}")
-        else:
-            selected_file_path = questions_file
+        selected_file_path = questions_file
     else:
         questions_directory = os.path.join(os.getcwd(), 'questions')
         files_list = os.listdir(questions_directory)

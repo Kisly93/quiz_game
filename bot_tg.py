@@ -33,12 +33,14 @@ def command_default(message):
 def handle_telegram_messages(message):
     chat_id = message.chat.id
     user_answer = message.text
+    questions_and_answers = load_questions_answers()
+
     if user_answer == 'Новый вопрос':
-        random_question = get_random_question()
+        random_question = get_random_question(questions_and_answers)
         redis_db.set(chat_id, random_question)
         bot.send_message(chat_id, f"Вопрос: {random_question}")
     else:
-        correct_answer = load_questions_answers().get(redis_db.get(chat_id).decode('utf-8'))
+        correct_answer = questions_and_answers.get(redis_db.get(chat_id).decode('utf-8'))
         if user_answer.lower() == 'сдаться':
             bot.send_message(chat_id, f"Вот тебе правильный ответ: {correct_answer} Попробуйте следующий вопрос.")
         elif check_answer(user_answer, correct_answer):
