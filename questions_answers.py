@@ -9,7 +9,7 @@ def is_file(filename):
         return filename
 
 
-def load_questions_answers(questions_and_answers=None, questions_file=None):
+def load_questions_answers(questions_file=None, questions_and_answers=None):
     if questions_and_answers is not None:
         return questions_and_answers
 
