@@ -3,8 +3,6 @@ import os
 import random
 import argparse
 
-questions_and_answers = None
-
 
 def is_file(filename):
     if os.path.isfile(filename):
@@ -12,10 +10,6 @@ def is_file(filename):
 
 
 def load_questions_answers(questions_file=None):
-    global questions_and_answers
-    if questions_and_answers is not None:
-        return questions_and_answers
-
     if questions_file is not None:
         selected_file_path = questions_file
     else:
@@ -38,8 +32,8 @@ def load_questions_answers(questions_file=None):
     return questions_and_answers
 
 
-def get_random_question():
-    return random.choice(list(load_questions_answers().keys()))
+def get_random_question(questions_and_answers):
+    return random.choice(list(questions_and_answers.keys()))
 
 
 def check_answer(user_answer, correct_answer):

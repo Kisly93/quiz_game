@@ -41,6 +41,8 @@ def main():
         redis_db = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'),
                                      password=os.getenv('REDIS_PASSWORD'), db=0)
 
+        questions_and_answers = load_questions_answers()
+
         for event in longpoll.listen():
 
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
@@ -50,11 +52,11 @@ def main():
                     send_message_with_keyboard(chat_id, 'Привет! Я бот-викторина. Нажми "Новый вопрос", чтобы начать.',
                                                keyboard, vk_api)
                 elif user_answer == 'Новый вопрос':
-                    random_question = get_random_question()
+                    random_question = get_random_question(questions_and_answers)
                     redis_db.set(chat_id, random_question)
                     send_message_with_keyboard(chat_id, f"Вопрос: {random_question}", keyboard, vk_api)
                 else:
-                    correct_answer = load_questions_answers().get(
+                    correct_answer = questions_and_answers.get(
                         redis_db.get(chat_id).decode('utf-8'))
                     if user_answer.lower() == 'сдаться':
                         send_message_with_keyboard(chat_id,
