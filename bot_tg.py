@@ -17,10 +17,9 @@ user_data = {}
 @bot.message_handler(commands=['start'])
 def handle_start(message):
     chat_id = message.chat.id
-
-    if 'questions_and_answers_from_file' not in user_data.get(chat_id, {}):
-        questions_and_answers_from_file = load_questions_answers()
-        user_data[chat_id] = {'questions_and_answers_from_file': questions_and_answers_from_file}
+    
+    questions_and_answers_from_file = load_questions_answers()
+    user_data[chat_id] = {'questions_and_answers_from_file': questions_and_answers_from_file}
 
     bot.send_message(chat_id, "Привет! Я - бот викторины.")
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
