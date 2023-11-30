@@ -3,13 +3,16 @@ import os
 import random
 import argparse
 
+questions_and_answers = None
+
 
 def is_file(filename):
     if os.path.isfile(filename):
         return filename
 
 
-def load_questions_answers(questions_and_answers=None, questions_file=None):
+def load_questions_answers(questions_file=None):
+    global questions_and_answers
     if questions_and_answers is not None:
         return questions_and_answers
 
@@ -23,7 +26,6 @@ def load_questions_answers(questions_and_answers=None, questions_file=None):
 
     with open(selected_file_path, "r", encoding="KOI8-R") as my_file:
         file_contents = my_file.read().split('\n\n')
-
     questions_and_answers = {}
 
     for block in file_contents:
@@ -36,8 +38,8 @@ def load_questions_answers(questions_and_answers=None, questions_file=None):
     return questions_and_answers
 
 
-def get_random_question(questions_file=None):
-    return random.choice(list(load_questions_answers(questions_file).keys()))
+def get_random_question():
+    return random.choice(list(load_questions_answers().keys()))
 
 
 def check_answer(user_answer, correct_answer):
